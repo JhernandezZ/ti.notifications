@@ -1,0 +1,2 @@
+"/Users/jhernandezz/Documents/Appcelerator_Studio_Workspace/ti-notifications/android/build/generated/java/ti/notifications/TiNotificationsBootstrap.java"
+"/Users/jhernandezz/Documents/Appcelerator_Studio_Workspace/ti-notifications/android/src/ti/notifications/TiNotificationsModule.java"

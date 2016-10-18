@@ -1,0 +1,16 @@
+%define lookup-function-name lookupGeneratedInit
+%define class-name TiNotificationsBindings
+%{
+
+#include <string.h>
+#include <v8.h>
+#include <KrollBindings.h>
+
+#include "ti.notifications.TiNotificationsModule.h"
+
+
+%}
+struct titanium::bindings::BindEntry;
+%%
+ti.notifications.TiNotificationsModule,::ti::notifications::TiNotificationsModule::bindProxy,::ti::notifications::TiNotificationsModule::dispose
+%%
