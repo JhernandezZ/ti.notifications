@@ -58,6 +58,24 @@ public class TiNotificationsModule extends KrollModule
 		return "hello world";
 	}
 	
+	public PendingIntent pendingIntentLauncherApp (String className, int notificationId, String packageName, String source) {
+		Context context = TiApplication.getInstance().getApplicationContext();
+		Intent notificationIntent = new Intent("action"+notificationId);
+		
+		notificationIntent.setClassName(context, className);
+		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		notificationIntent.setPackage(packageName);
+		
+		notificationIntent.putExtra("ntfId", notificationId);
+		notificationIntent.putExtra("notifications", notificationId);
+		notificationIntent.putExtra("source", source);
+		
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+      
+        
+        return pendingIntent;
+	}
+	
 	public PendingIntent pendingIntentOpenUrl (String url){
 		Context context = TiApplication.getInstance().getApplicationContext();
 		Intent notificationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -71,7 +89,7 @@ public class TiNotificationsModule extends KrollModule
 	}
 	
 	@Kroll.method
-	public void addAction (int notificationId, int smallIcon, String title, String message, String summaryText,
+	public void addActionUrl (int notificationId, int smallIcon, String title, String message, String summaryText,
 						   int iconAction, String actionMessage) {
 		
 		Context context = TiApplication.getInstance().getApplicationContext();
@@ -87,6 +105,37 @@ public class TiNotificationsModule extends KrollModule
   		nc.setDefaults(Notification.DEFAULT_ALL);
   		
   		nc.addAction(iconAction, actionMessage, pendingIntentOpenUrl(summaryText));
+ 
+  		bigTextNotification.setBigContentTitle(title);
+  		bigTextNotification.bigText(message);
+  		bigTextNotification.setSummaryText(summaryText);
+  		
+  		nc.setStyle(bigTextNotification);
+ 
+  		nm.notify(notificationId, nc.build());
+	}
+	
+	@Kroll.method
+	public void addActionReport (int notificationId, int smallIcon, String title, String message, String summaryText,
+						   int iconAction, String actionMessage,String className,String packageName) {
+		
+		Context context = TiApplication.getInstance().getApplicationContext();
+		NotificationCompat.Builder nc = new NotificationCompat.Builder(context );
+ 		NotificationCompat.BigTextStyle bigTextNotification = new NotificationCompat.BigTextStyle();
+ 		NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+ 		PendingIntent pendingIntent = pendingIntentLauncherApp(className, notificationId, packageName, summaryText);
+ 
+ 		
+  		nc.setSmallIcon(smallIcon);
+  		nc.setAutoCancel(true);
+  		nc.setContentTitle(title);
+  		nc.setContentText(message);
+  		
+  		nc.setDefaults(Notification.DEFAULT_ALL);
+  		
+  		
+  		
+  		nc.addAction(iconAction, actionMessage, pendingIntent);
  
   		bigTextNotification.setBigContentTitle(title);
   		bigTextNotification.bigText(message);
