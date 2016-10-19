@@ -123,9 +123,9 @@ Handle<Value> TiNotificationsModule::addAction(const Arguments& args)
 	}
 	static jmethodID methodID = NULL;
 	if (!methodID) {
-		methodID = env->GetMethodID(TiNotificationsModule::javaClass, "addAction", "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Landroid/app/PendingIntent;)V");
+		methodID = env->GetMethodID(TiNotificationsModule::javaClass, "addAction", "(IILjava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)V");
 		if (!methodID) {
-			const char *error = "Couldn't find proxy method 'addAction' with signature '(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Landroid/app/PendingIntent;)V'";
+			const char *error = "Couldn't find proxy method 'addAction' with signature '(IILjava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)V'";
 			LOGE(TAG, error);
 				return titanium::JSException::Error(error);
 		}
@@ -161,12 +161,17 @@ Handle<Value> TiNotificationsModule::addAction(const Arguments& args)
 
 	
 	
+		if ((titanium::V8Util::isNaN(args[1]) && !args[1]->IsUndefined()) || args[1]->ToString()->Length() == 0) {
+			const char *error = "Invalid value, expected type Number.";
+			LOGE(TAG, error);
+			return titanium::JSException::Error(error);
+		}
 	if (!args[1]->IsNull()) {
-		Local<Value> arg_1 = args[1];
-		jArguments[1].l =
-			titanium::TypeConverter::jsValueToJavaString(env, arg_1);
+		Local<Number> arg_1 = args[1]->ToNumber();
+		jArguments[1].i =
+			titanium::TypeConverter::jsNumberToJavaInt(env, arg_1);
 	} else {
-		jArguments[1].l = NULL;
+		jArguments[1].i = NULL;
 	}
 
 	
@@ -191,35 +196,35 @@ Handle<Value> TiNotificationsModule::addAction(const Arguments& args)
 
 	
 	
-		if ((titanium::V8Util::isNaN(args[4]) && !args[4]->IsUndefined()) || args[4]->ToString()->Length() == 0) {
+	if (!args[4]->IsNull()) {
+		Local<Value> arg_4 = args[4];
+		jArguments[4].l =
+			titanium::TypeConverter::jsValueToJavaString(env, arg_4);
+	} else {
+		jArguments[4].l = NULL;
+	}
+
+	
+	
+		if ((titanium::V8Util::isNaN(args[5]) && !args[5]->IsUndefined()) || args[5]->ToString()->Length() == 0) {
 			const char *error = "Invalid value, expected type Number.";
 			LOGE(TAG, error);
 			return titanium::JSException::Error(error);
 		}
-	if (!args[4]->IsNull()) {
-		Local<Number> arg_4 = args[4]->ToNumber();
-		jArguments[4].i =
-			titanium::TypeConverter::jsNumberToJavaInt(env, arg_4);
-	} else {
-		jArguments[4].i = NULL;
-	}
-
-	
-	
 	if (!args[5]->IsNull()) {
-		Local<Value> arg_5 = args[5];
-		jArguments[5].l =
-			titanium::TypeConverter::jsValueToJavaString(env, arg_5);
+		Local<Number> arg_5 = args[5]->ToNumber();
+		jArguments[5].i =
+			titanium::TypeConverter::jsNumberToJavaInt(env, arg_5);
 	} else {
-		jArguments[5].l = NULL;
+		jArguments[5].i = NULL;
 	}
 
-	bool isNew_6;
+	
 	
 	if (!args[6]->IsNull()) {
 		Local<Value> arg_6 = args[6];
 		jArguments[6].l =
-			titanium::TypeConverter::jsValueToJavaObject(env, arg_6, &isNew_6);
+			titanium::TypeConverter::jsValueToJavaString(env, arg_6);
 	} else {
 		jArguments[6].l = NULL;
 	}
@@ -233,21 +238,16 @@ Handle<Value> TiNotificationsModule::addAction(const Arguments& args)
 
 
 
-				env->DeleteLocalRef(jArguments[1].l);
-
-
 				env->DeleteLocalRef(jArguments[2].l);
 
 
 				env->DeleteLocalRef(jArguments[3].l);
 
 
-				env->DeleteLocalRef(jArguments[5].l);
+				env->DeleteLocalRef(jArguments[4].l);
 
 
-			if (isNew_6) {
 				env->DeleteLocalRef(jArguments[6].l);
-			}
 
 
 	if (env->ExceptionCheck()) {

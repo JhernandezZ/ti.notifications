@@ -1,5 +1,5 @@
 
-10/18/2016, 5:25:26 PM
+10/18/2016, 6:12:44 PM
 
 Operating System
   Name                        = Mac OS X
@@ -21,7 +21,7 @@ Titanium SDK
   Target Platform             = android
 
 Command
-  /usr/local/bin/node /Users/jhernandezz/.appcelerator/install/5.5.1/package/node_modules/titanium/lib/titanium.js build run --platform android --project-dir /Users/jhernandezz/Documents/Appcelerator_Studio_Workspace/ti-notifications/android --build-only --no-colors --no-progress-bars --no-prompt --no-banner --prompt-type socket-bundle --prompt-port 56999 --config-file /var/folders/vv/b6c6kypd5bgc6wvbx43cngpdgdcsht/T/build-1476829519328.json --log-level info --no-banner --project-dir /Users/jhernandezz/Documents/Appcelerator_Studio_Workspace/ti-notifications/android
+  /usr/local/bin/node /Users/jhernandezz/.appcelerator/install/5.5.1/package/node_modules/titanium/lib/titanium.js build run --platform android --project-dir /Users/jhernandezz/Documents/Appcelerator_Studio_Workspace/ti-notifications/android --build-only --no-colors --no-progress-bars --no-prompt --no-banner --prompt-type socket-bundle --prompt-port 53575 --config-file /var/folders/vv/b6c6kypd5bgc6wvbx43cngpdgdcsht/T/build-1476832357977.json --log-level info --no-banner --project-dir /Users/jhernandezz/Documents/Appcelerator_Studio_Workspace/ti-notifications/android
 
 [INFO]   javac Max Memory: 256M
 [INFO]   javac Source: 1.6
@@ -52,4 +52,4 @@ Packaging the module
 [INFO]   Generate module JAR: jar "cf" "/Users/jhernandezz/Documents/Appcelerator_Studio_Workspace/ti-notifications/android/dist/ti-notifications.jar" "-C" "/Users/jhernandezz/Documents/Appcelerator_Studio_Workspace/ti-notifications/android/build/classes" "." "-C" "/Users/jhernandezz/Documents/Appcelerator_Studio_Workspace/ti-notifications" "assets"
 [INFO]   Creating module zip
 [INFO]   Writing module zip: /Users/jhernandezz/Documents/Appcelerator_Studio_Workspace/ti-notifications/android/dist/ti.notifications-android-0.1.zip
-[INFO]   Project built successfully in 10s 553ms
+[INFO]   Project built successfully in 7s 92ms

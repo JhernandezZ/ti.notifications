@@ -13,7 +13,9 @@ import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.kroll.common.TiConfig;
+import org.appcelerator.titanium.proxy.IntentProxy;
 
+import sun.rmi.runtime.NewThreadAction;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.graphics.Bitmap;
@@ -23,6 +25,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 
 @Kroll.module(name="TiNotifications", id="ti.notifications")
 public class TiNotificationsModule extends KrollModule
@@ -55,9 +58,21 @@ public class TiNotificationsModule extends KrollModule
 		return "hello world";
 	}
 	
+	public PendingIntent pendingIntentOpenUrl (String url){
+		Context context = TiApplication.getInstance().getApplicationContext();
+		Intent notificationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+		
+		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+      
+        
+        return pendingIntent;
+	}
+	
 	@Kroll.method
 	public void addAction (int notificationId, int smallIcon, String title, String message, String summaryText,
-						   int iconAction, String actionMessage, PendingIntent pendingIntent) {
+						   int iconAction, String actionMessage) {
 		
 		Context context = TiApplication.getInstance().getApplicationContext();
 		NotificationCompat.Builder nc = new NotificationCompat.Builder(context );
@@ -68,8 +83,10 @@ public class TiNotificationsModule extends KrollModule
   		nc.setAutoCancel(true);
   		nc.setContentTitle(title);
   		nc.setContentText(message);
+  		
   		nc.setDefaults(Notification.DEFAULT_ALL);
-  		nc.addAction(iconAction, actionMessage, pendingIntent);
+  		
+  		nc.addAction(iconAction, actionMessage, pendingIntentOpenUrl(summaryText));
  
   		bigTextNotification.setBigContentTitle(title);
   		bigTextNotification.bigText(message);
